@@ -1,0 +1,497 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Racing brand colors */
+  --color-rb-red: var(--rb-red);
+  --color-rb-amber: var(--rb-amber);
+  --color-rb-green: var(--rb-green);
+  --color-rb-cyan: var(--rb-cyan);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+  --rb-red: #ef4444;
+  --rb-amber: #f59e0b;
+  --rb-green: #22c55e;
+  --rb-cyan: #06b6d4;
+}
+
+.dark {
+  /* Carbon-fiber racing dark theme */
+  --background: oklch(0.13 0.005 264);
+  --foreground: oklch(0.97 0.003 264);
+  --card: oklch(0.17 0.006 264);
+  --card-foreground: oklch(0.97 0.003 264);
+  --popover: oklch(0.17 0.006 264);
+  --popover-foreground: oklch(0.97 0.003 264);
+  --primary: oklch(0.62 0.22 25);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.22 0.008 264);
+  --secondary-foreground: oklch(0.97 0.003 264);
+  --muted: oklch(0.22 0.008 264);
+  --muted-foreground: oklch(0.75 0.012 264);
+  --accent: oklch(0.28 0.01 264);
+  --accent-foreground: oklch(0.97 0.003 264);
+  --destructive: oklch(0.65 0.21 25);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.62 0.22 25);
+  /* Tire/performance palette: red=critical, amber=warning, green=optimal, cyan=info */
+  --chart-1: oklch(0.65 0.24 25);   /* red - critical/soft */
+  --chart-2: oklch(0.78 0.18 75);   /* amber - warning/medium */
+  --chart-3: oklch(0.72 0.18 150);  /* green - optimal/hard */
+  --chart-4: oklch(0.70 0.15 200);  /* cyan - info */
+  --chart-5: oklch(0.72 0.18 300);  /* magenta - rival */
+  --sidebar: oklch(0.11 0.005 264);
+  --sidebar-foreground: oklch(0.97 0.003 264);
+  --sidebar-primary: oklch(0.62 0.22 25);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.22 0.008 264);
+  --sidebar-accent-foreground: oklch(0.97 0.003 264);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.62 0.22 25);
+
+  --rb-red: #ef4444;
+  --rb-amber: #f59e0b;
+  --rb-green: #22c55e;
+  --rb-cyan: #06b6d4;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-image:
+      radial-gradient(circle at 15% 0%, oklch(0.62 0.22 25 / 0.08) 0%, transparent 35%),
+      radial-gradient(circle at 85% 100%, oklch(0.72 0.18 150 / 0.05) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+}
+
+/* Carbon fiber texture utility */
+.carbon-bg {
+  background-color: oklch(0.13 0.005 264);
+  background-image:
+    linear-gradient(135deg, oklch(1 0 0 / 0.015) 25%, transparent 25%),
+    linear-gradient(225deg, oklch(1 0 0 / 0.015) 25%, transparent 25%),
+    linear-gradient(45deg, oklch(1 0 0 / 0.015) 25%, transparent 25%),
+    linear-gradient(315deg, oklch(1 0 0 / 0.015) 25%, transparent 25%);
+  background-size: 12px 12px;
+  background-position: 0 0, 6px 0, 6px -6px, 0 6px;
+}
+
+/* Racing stripe accent */
+.rb-stripe {
+  background: linear-gradient(90deg,
+    oklch(0.62 0.22 25) 0%,
+    oklch(0.65 0.22 35) 50%,
+    oklch(0.78 0.18 75) 100%);
+}
+
+/* Pulse animation for live indicators */
+@keyframes rb-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.1); }
+}
+.rb-live-dot {
+  animation: rb-pulse 1.6s ease-in-out infinite;
+}
+
+/* Subtle scan line for telemetry panels */
+@keyframes rb-scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+.rb-scanline::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, oklch(0.62 0.22 25 / 0.06), transparent);
+  animation: rb-scan 3s linear infinite;
+  pointer-events: none;
+}
+
+/* Number flicker for live values */
+@keyframes rb-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+.rb-flicker { animation: rb-flicker 2s ease-in-out infinite; }
+
+/* Custom scrollbar */
+.rb-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+.rb-scroll::-webkit-scrollbar-track { background: oklch(0.13 0.005 264); }
+.rb-scroll::-webkit-scrollbar-thumb { background: oklch(0.62 0.22 25 / 0.4); border-radius: 3px; }
+.rb-scroll::-webkit-scrollbar-thumb:hover { background: oklch(0.62 0.22 25 / 0.7); }
+
+/* D3 chart text color */
+.d3-axis text { fill: oklch(0.75 0.012 264); font-size: 11px; font-family: var(--font-geist-mono), monospace; }
+.d3-axis line, .d3-axis path { stroke: oklch(1 0 0 / 0.15); }
+.d3-grid line { stroke: oklch(1 0 0 / 0.06); stroke-dasharray: 2,3; }
+.d3-grid path { stroke: none; }
+
+/* Glass panel effect */
+.rb-glass {
+  background: oklch(0.17 0.006 264 / 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid oklch(1 0 0 / 0.08);
+}
+.rb-glass:hover {
+  border-color: oklch(1 0 0 / 0.14);
+}
+
+/* Glow effects */
+.rb-glow-red { box-shadow: 0 0 32px -8px oklch(0.65 0.24 25 / 0.45); }
+.rb-glow-green { box-shadow: 0 0 32px -8px oklch(0.72 0.18 150 / 0.4); }
+.rb-glow-amber { box-shadow: 0 0 32px -8px oklch(0.78 0.18 75 / 0.4); }
+.rb-glow-cyan { box-shadow: 0 0 32px -8px oklch(0.70 0.15 200 / 0.4); }
+
+/* Slide-in animation for alerts */
+@keyframes rb-slide-in {
+  from { transform: translateX(120%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+.rb-slide-in { animation: rb-slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* Fade-up animation for cards */
+@keyframes rb-fade-up {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.rb-fade-up { animation: rb-fade-up 0.35s ease-out; }
+
+/* Shimmer for loading/skeleton */
+@keyframes rb-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.rb-shimmer {
+  background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.06), transparent);
+  background-size: 200% 100%;
+  animation: rb-shimmer 1.8s linear infinite;
+}
+
+/* Number tick animation */
+@keyframes rb-tick {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+.rb-tick { animation: rb-tick 0.3s ease-out; }
+
+/* Hover lift effect */
+.rb-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.rb-lift:hover { transform: translateY(-2px); }
+
+/* Active tab underline */
+.rb-tab-active {
+  position: relative;
+}
+.rb-tab-active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  background: linear-gradient(90deg, oklch(0.62 0.22 25), oklch(0.78 0.18 75));
+  border-radius: 2px;
+}
+
+/* Focus ring */
+.rb-focus:focus-visible {
+  outline: 2px solid oklch(0.62 0.22 25 / 0.6);
+  outline-offset: 2px;
+}
+
+/* Grid pattern background */
+.rb-grid-bg {
+  background-image:
+    linear-gradient(oklch(1 0 0 / 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(1 0 0 / 0.025) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Diagonal hazard stripes for warnings */
+.rb-hazard {
+  background-image: repeating-linear-gradient(
+    45deg,
+    oklch(0.78 0.18 75 / 0.15),
+    oklch(0.78 0.18 75 / 0.15) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+}
+
+/* Animated gradient border */
+@keyframes rb-border-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.rb-border-flow {
+  position: relative;
+  background: oklch(0.17 0.006 264);
+}
+.rb-border-flow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(120deg, oklch(0.62 0.22 25), oklch(0.78 0.18 75), oklch(0.70 0.15 200), oklch(0.62 0.22 25));
+  background-size: 300% 300%;
+  animation: rb-border-flow 4s ease infinite;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Compact stat chip */
+.rb-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-family: var(--font-geist-mono), monospace;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Sweep highlight on hover */
+@keyframes rb-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.rb-sweep {
+  position: relative;
+  overflow: hidden;
+}
+.rb-sweep::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.08), transparent);
+  transform: translateX(-100%);
+}
+.rb-sweep:hover::after {
+  animation: rb-sweep 0.8s ease;
+}
+
+/* ===== Round 5: Advanced Styling ===== */
+
+/* Neon text glow effect */
+.rb-neon-red { text-shadow: 0 0 10px oklch(0.65 0.24 25 / 0.5), 0 0 20px oklch(0.65 0.24 25 / 0.3); }
+.rb-neon-green { text-shadow: 0 0 10px oklch(0.72 0.18 150 / 0.5), 0 0 20px oklch(0.72 0.18 150 / 0.3); }
+.rb-neon-amber { text-shadow: 0 0 10px oklch(0.78 0.18 75 / 0.5), 0 0 20px oklch(0.78 0.18 75 / 0.3); }
+.rb-neon-cyan { text-shadow: 0 0 10px oklch(0.70 0.15 200 / 0.5), 0 0 20px oklch(0.70 0.15 200 / 0.3); }
+
+/* Card entrance with stagger */
+@keyframes rb-stagger-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.rb-stagger { animation: rb-stagger-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+
+/* Pulsing border for critical states */
+@keyframes rb-border-pulse {
+  0%, 100% { border-color: oklch(0.65 0.24 25 / 0.4); box-shadow: 0 0 0 0 oklch(0.65 0.24 25 / 0); }
+  50% { border-color: oklch(0.65 0.24 25 / 0.8); box-shadow: 0 0 16px 2px oklch(0.65 0.24 25 / 0.2); }
+}
+.rb-border-pulse { animation: rb-border-pulse 2s ease-in-out infinite; }
+
+/* Data ticker scroll */
+@keyframes rb-ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.rb-ticker {
+  display: inline-flex;
+  animation: rb-ticker 30s linear infinite;
+  white-space: nowrap;
+}
+
+/* Glassmorphism card with inner glow */
+.rb-card-glass {
+  background: linear-gradient(135deg, oklch(0.17 0.006 264 / 0.8), oklch(0.13 0.005 264 / 0.6));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid oklch(1 0 0 / 0.08);
+  box-shadow: 
+    inset 0 1px 0 0 oklch(1 0 0 / 0.05),
+    0 4px 20px -4px oklch(0 0 0 / 0.4);
+  transition: all 0.25s ease;
+}
+.rb-card-glass:hover {
+  border-color: oklch(1 0 0 / 0.14);
+  box-shadow: 
+    inset 0 1px 0 0 oklch(1 0 0 / 0.08),
+    0 8px 32px -4px oklch(0 0 0 / 0.5);
+}
+
+/* Gradient text */
+.rb-gradient-text {
+  background: linear-gradient(135deg, oklch(0.62 0.22 25), oklch(0.78 0.18 75));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Animated progress bar fill */
+@keyframes rb-fill {
+  from { width: 0%; }
+}
+.rb-fill { animation: rb-fill 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* Spinner ring */
+@keyframes rb-spin {
+  to { transform: rotate(360deg); }
+}
+.rb-spin { animation: rb-spin 1s linear infinite; }
+
+/* Bounce-in for alerts */
+@keyframes rb-bounce-in {
+  0% { transform: scale(0.8); opacity: 0; }
+  60% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.rb-bounce-in { animation: rb-bounce-in 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* Typing cursor for live data */
+@keyframes rb-cursor {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+.rb-cursor::after {
+  content: '▌';
+  animation: rb-cursor 1s step-end infinite;
+  margin-left: 1px;
+}
+
+/* Number counter glow */
+.rb-counter {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+/* Section divider with gradient */
+.rb-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.15), transparent);
+}
+
+/* Tab indicator slide */
+.rb-tab-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, oklch(0.62 0.22 25), oklch(0.78 0.18 75));
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hover ripple */
+.rb-ripple {
+  position: relative;
+  overflow: hidden;
+}
+.rb-ripple::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0; height: 0;
+  border-radius: 50%;
+  background: oklch(1 0 0 / 0.06);
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
+}
+.rb-ripple:hover::before {
+  width: 200%; height: 200%;
+}
+
+/* Stagger delays */
+.rb-delay-1 { animation-delay: 0.05s; }
+.rb-delay-2 { animation-delay: 0.1s; }
+.rb-delay-3 { animation-delay: 0.15s; }
+.rb-delay-4 { animation-delay: 0.2s; }
+.rb-delay-5 { animation-delay: 0.25s; }
+.rb-delay-6 { animation-delay: 0.3s; }

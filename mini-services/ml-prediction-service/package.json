@@ -1,0 +1,19 @@
+{
+  "name": "ml-prediction-service",
+  "version": "1.0.0",
+  "description": "ML prediction mini-service for the Predictive Tire Performance & Strategy Engine (Apex Racing F1).",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --hot index.ts",
+    "start": "bun index.ts"
+  },
+  "keywords": [
+    "f1",
+    "racing-bulls",
+    "tire",
+    "ml",
+    "prediction"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "telemetry-service",
+  "version": "1.0.0",
+  "description": "WebSocket mini-service simulating live F1 race telemetry for the Apex Racing Predictive Tire Performance & Strategy Engine.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --hot index.ts",
+    "start": "bun index.ts"
+  },
+  "dependencies": {
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0"
+  }
+}

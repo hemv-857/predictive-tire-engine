@@ -1,0 +1,179 @@
+// Predictive Tire Performance & Strategy Engine - Apex Racing
+// Prisma schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Race {
+  id          String   @id @default(cuid())
+  name        String
+  circuit     String
+  country     String
+  round       Int
+  date        DateTime
+  airTemp     Float
+  trackTemp   Float
+  humidity    Float
+  weather     String // dry, wet, intermediate
+  status      String  // scheduled, ongoing, completed
+  lapsTotal   Int
+  createdAt   DateTime @default(now())
+
+  telemetry   Telemetry[]
+  pitDecisions PitDecision[]
+  predictions  PredictionLog[]
+}
+
+model Driver {
+  id        String   @id @default(cuid())
+  name      String
+  code      String   // 3-letter code e.g. VER, TSU
+  team      String
+  number    Int
+  createdAt DateTime @default(now())
+
+  telemetry     Telemetry[]
+  pitDecisions  PitDecision[]
+  predictions   PredictionLog[]
+}
+
+model TireCompound {
+  id            String   @id @default(cuid())
+  name          String   // Soft, Medium, Hard, Intermediate, Wet
+  shortName     String   // S, M, H, I, W
+  color         String   // hex color for viz
+  expectedLife  Int      // expected laps at peak performance
+  gripRating    Float    // 0-1 baseline grip
+  degradation   Float    // degradation rate coefficient
+  createdAt     DateTime @default(now())
+
+  telemetry     Telemetry[]
+}
+
+model Telemetry {
+  id              String   @id @default(cuid())
+  raceId          String
+  driverId        String
+  compoundId      String
+  lap             Int
+  tireTempFL      Float    // front-left tire temp (C)
+  tireTempFR      Float
+  tireTempRL      Float
+  tireTempRR      Float
+  tirePressureFL  Float    // psi
+  tirePressureFR  Float
+  tirePressureRL  Float
+  tirePressureRR  Float
+  slipAngleFL     Float    // degrees
+  slipAngleFR     Float
+  brakeTempFL     Float    // C
+  brakeTempFR     Float
+  fuelLoad        Float    // kg
+  tirePerformance Float    // 0-1 grip retention (1 = new tire)
+  lapTime         Float    // seconds
+  sector1Time     Float
+  sector2Time     Float
+  sector3Time     Float
+  speedTrap       Float    // km/h
+  timestamp       DateTime @default(now())
+
+  race            Race         @relation(fields: [raceId], references: [id], onDelete: Cascade)
+  driver          Driver       @relation(fields: [driverId], references: [id], onDelete: Cascade)
+  compound        TireCompound @relation(fields: [compoundId], references: [id], onDelete: Cascade)
+
+  @@index([raceId, driverId, lap])
+  @@index([raceId, lap])
+}
+
+model TireModel {
+  id              String   @id @default(cuid())
+  version         String
+  status          String   // active, archived, training
+  accuracy        Float    // 0-1
+  precision       Float
+  recall          Float
+  f1Score         Float
+  avgLatencyMs    Float    // inference latency
+  trainingSamples Int
+  features        String   // JSON of feature names
+  thresholds      String   // JSON of perf thresholds
+  trainedAt       DateTime
+  createdAt       DateTime @default(now())
+
+  predictions     PredictionLog[]
+}
+
+model PitDecision {
+  id             String   @id @default(cuid())
+  raceId         String
+  driverId       String
+  recommendedLap Int
+  actualLap      Int?
+  confidence     Float     // 0-1
+  pitWindowLow   Int
+  pitWindowHigh  Int
+  compoundFrom   String
+  compoundTo     String
+  reasoning      String
+  status         String   // pending, executed, missed, optimal
+  timingErrorLaps Float?  // |recommended - actual|
+  createdAt      DateTime @default(now())
+
+  race           Race    @relation(fields: [raceId], references: [id], onDelete: Cascade)
+  driver         Driver  @relation(fields: [driverId], references: [id], onDelete: Cascade)
+}
+
+model PredictionLog {
+  id              String   @id @default(cuid())
+  raceId          String
+  modelId         String
+  driverId        String
+  lap             Int
+  predictedPerf   Float    // predicted tire performance
+  actualPerf      Float?
+  predictedClass  String   // optimal, 95%, 90%, 85%, critical
+  confidenceLow   Float    // confidence interval low
+  confidenceHigh  Float
+  inferenceMs     Float    // latency
+  timestamp       DateTime @default(now())
+
+  race            Race       @relation(fields: [raceId], references: [id], onDelete: Cascade)
+  model           TireModel  @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  driver          Driver     @relation(fields: [driverId], references: [id], onDelete: Cascade)
+}
+
+model CompetitorStrategy {
+  id                 String   @id @default(cuid())
+  team               String
+  circuit            String
+  raceName           String
+  driver             String
+  compound           String
+  avgPitLap          Int
+  stintLength        Int
+  tireStrategy       String   // one-stop, two-stop, three-stop
+  degResistance       Float    // 0-1 how well they manage degradation
+  pitStopAvg         Float    // avg pit stop time
+  pointsScored       Int
+  finishPosition     Int
+  weekOf             DateTime
+  notes              String
+  createdAt          DateTime @default(now())
+}
+
+model WeeklyBrief {
+  id           String   @id @default(cuid())
+  title        String
+  weekOf       DateTime
+  summary      String
+  keyFindings  String    // JSON array
+  recommendations String // JSON array
+  preparedFor  String   // Performance Director
+  createdAt    DateTime @default(now())
+}
