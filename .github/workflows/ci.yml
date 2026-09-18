@@ -30,13 +30,14 @@ jobs:
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
-      - name: Install uv for Python tests
+      - name: Install uv
         run: curl -LsSf https://astral.sh/uv/install.sh | sh
-      - run: bun install --frozen-lockfile
-      - run: bash tests/database-runtime-build.sh
-      - run: bash tests/python-runtime-build.sh
-        env:
-          PATH: "/home/runner/.local/bin:${PATH}"
+      - name: Run tests
+        run: |
+          export PATH="/home/runner/.local/bin:${PATH}"
+          bun install --frozen-lockfile
+          bash tests/database-runtime-build.sh
+          bash tests/python-runtime-build.sh
 
   build:
     name: Build
