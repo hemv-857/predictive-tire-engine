@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: "Real-time tire degradation ML model, pit stop decision support, and competitive benchmarking for Apex Racing Formula 1 team.",
   keywords: ["F1", "Apex Racing", "tire degradation", "machine learning", "pit strategy", "telemetry", "D3"],
   authors: [{ name: "Apex Racing Performance Engineering" }],
-  icons: { icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg" },
+  icons: { icon: "/logo.svg" },
 };
 
 export default function RootLayout({
