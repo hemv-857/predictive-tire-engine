@@ -1,15 +1,25 @@
 # Predictive Tire Performance & Strategy Engine
 
-**Apex Racing F1** — Real-time tire degradation ML model, pit stop decision support, and competitive benchmarking dashboard.
+![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-6-2D3748?logo=prisma&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-## Overview
+> Real-time tire degradation ML model, pit stop decision support, and competitive benchmarking dashboard for the **Apex Racing F1 team**.
 
-This project is a complete Formula 1 tire strategy platform built for the Apex Racing team. It combines:
+---
 
-- **Physics-informed ML model** — tire degradation prediction with multi-class classification (optimal/warning/critical)
-- **Live telemetry ingestion** — WebSocket streaming from a race simulator (5 drivers, 58-lap Monaco GP loop)
-- **Pit strategy dashboard** — 18-tab D3.js dashboard with degradation curves, pit windows, sector analysis, competitor intel
-- **Mini-services architecture** — decoupled TypeScript services for ML inference (port 3004) and telemetry (port 3003)
+## Features
+
+- **Physics-Informed ML Model** — Tire degradation prediction with multi-class classification (optimal/warning/critical)
+- **Live Telemetry** — WebSocket streaming from a race simulator (5 drivers, 58-lap Monaco GP loop)
+- **Pit Strategy Dashboard** — 18-tab D3.js dashboard with degradation curves, pit windows, sector analysis
+- **Competitor Intel** — Team strategy patterns, circuit heatmaps, head-to-head comparisons
+- **Model Ops** — SHAP feature importance, training history, drift monitoring
+- **Championship Tracking** — Drivers' & Constructors' standings
+
+---
 
 ## Architecture
 
@@ -29,80 +39,66 @@ This project is a complete Formula 1 tire strategy platform built for the Apex R
                                        └─────────────┘
 ```
 
-## Quick Start
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript 5 (strict mode) |
+| Styling | Tailwind CSS 4, shadcn/ui |
+| Database | Prisma + SQLite |
+| Charts | D3.js, Recharts |
+| State | Zustand |
+| Real-time | Socket.io (port 3003) |
+
+---
+
+## Getting Started
 
 ### Prerequisites
-- Node.js 20+ / Bun 1.0+
-- Git
+- [Bun](https://bun.sh) >= 1.2 or Node.js >= 20
 
-### Local Development
+### Setup
+
 ```bash
-# Clone and install
 git clone https://github.com/hemv-857/predictive-tire-engine.git
 cd predictive-tire-engine
+
 bun install
-
-# Generate Prisma client
 bun run db:generate
-
-# Seed database with F1 data
 bunx tsx scripts/seed.ts
 
-# Start all services (3 terminals)
-# Terminal 1: Next.js dashboard
 bun run dev
-
-# Terminal 2: Telemetry WebSocket service
-cd mini-services/telemetry-service && bun run dev
-
-# Terminal 3: ML prediction service
-cd mini-services/ml-prediction-service && bun run dev
-
-# Access dashboard at http://localhost:3000
-# Or via Caddy gateway at http://localhost:81
 ```
 
-### Using Caddy Gateway (production-style)
-```bash
-# Start Caddy (proxies /socket.io/* → 3003, rest → 3000)
-caddy run --config Caddyfile
+Open **http://localhost:3000**.
+
+### Environment Variables
+
+Copy `.env.example` to `.env`:
+
+```env
+DATABASE_URL=file:./db/custom.db
 ```
+
+---
 
 ## Services
 
 | Service | Port | Purpose |
 |---------|------|---------|
 | Next.js Dashboard | 3000 | Main UI, API routes, Prisma ORM |
-| Telemetry Simulator | 3003 | Socket.io live race telemetry (5 drivers) |
+| Telemetry Simulator | 3003 | Socket.io live race telemetry |
 | ML Prediction | 3004 | Tire degradation model + pit-window solver |
 | Caddy Gateway | 81 | Reverse proxy, WebSocket routing |
 
-## Dashboard Tabs (18)
-
-| Tab | Purpose |
-|-----|---------|
-| **Command** | KPIs, model accuracy trend, race weekend status, weekly brief |
-| **Live** | Real-time AI recommendations for Apex drivers |
-| **Degradation** | 4-corner tire temps/pressures, performance trajectory, compound comparison |
-| **Thermal** | 4-corner temperature heatmap + distribution histogram |
-| **Pit Strategy** | ML recommendation banner, forecast chart, pit-window confidence, decision log |
-| **Pit Performance** | Timing error analysis, driver/race breakdown |
-| **Simulator** | What-if strategy builder with lap-time projection |
-| **Head-to-Head** | Driver vs driver lap/sector/performance comparison |
-| **Compare** | All 10 drivers' strategies side-by-side |
-| **Delta Matrix** | Lap-time delta heatmap (all drivers × all laps) |
-| **Sector** | Sector 1/2/3 breakdown, fastest sectors, lap-by-lap leaders |
-| **Explorer** | Multi-channel telemetry scrubber (temps, pressures, slip, brakes) |
-| **Lifecycle** | Stint-by-stint tire usage timeline |
-| **Weather** | Track temp/humidity impact on performance |
-| **Competitors** | Team strategy patterns, circuit heatmaps |
-| **Drift** | Model drift monitoring (MAE vs baseline) |
-| **Standings** | Drivers' & Constructors' championship |
-| **Model Ops** | Model metadata, SHAP feature importance, training history |
+---
 
 ## ML Model
 
-The tire degradation model is a **physics-informed deterministic formula** (not a trained neural net):
+Physics-informed deterministic formula:
 
 ```
 lapsFactor = (tireAge / expectedLife) ^ 1.4
@@ -113,67 +109,48 @@ predictedPerf = clamp(basePerf - penalties, 0.45, 1.0)
 
 **Compounds**: Soft (18 laps, 0.045 deg), Medium (28 laps, 0.028), Hard (40 laps, 0.017)
 
-**Classes**: optimal (≥0.95), warning_95 (0.90-0.95), warning_90 (0.85-0.90), warning_85 (0.80-0.85), critical (<0.80)
+**Classes**: optimal (>=0.95), warning_95 (0.90-0.95), warning_90 (0.85-0.90), warning_85 (0.80-0.85), critical (<0.80)
 
 **Endpoints**:
 - `POST /predict` — single-lap prediction with confidence interval
 - `POST /pit-window` — solves for lap where perf < 0.90
-- `GET /model/status` — version, hardcoded metrics, feature list
-- `GET /model/feature-importance` — SHAP-like rankings
-- `GET /model/training-history` — version history
+- `GET /model/status` — version, metrics, feature list
 
-> ⚠️ **Note**: Model "accuracy" (0.892) is a hardcoded constant in the ML service, not measured on test data.
+---
 
-## Database Schema (Prisma)
+## Dashboard Tabs (18)
 
-8 models: `Race`, `Driver`, `TireCompound`, `Telemetry` (16 fields/lap), `TireModel`, `PitDecision`, `PredictionLog`, `CompetitorStrategy`, `WeeklyBrief`.
+| Tab | Purpose |
+|-----|---------|
+| Command | KPIs, model accuracy trend, race weekend status |
+| Live | Real-time AI recommendations for Apex drivers |
+| Degradation | 4-corner tire temps/pressures, performance trajectory |
+| Thermal | 4-corner temperature heatmap + distribution |
+| Pit Strategy | ML recommendation, forecast chart, decision log |
+| Pit Performance | Timing error analysis, driver/race breakdown |
+| Simulator | What-if strategy builder |
+| Head-to-Head | Driver vs driver comparison |
+| Compare | All 10 drivers' strategies side-by-side |
+| Delta Matrix | Lap-time delta heatmap |
+| Sector | Sector 1/2/3 breakdown |
+| Explorer | Multi-channel telemetry scrubber |
+| Lifecycle | Stint-by-stint tire usage timeline |
+| Weather | Track temp/humidity impact |
+| Competitors | Team strategy patterns |
+| Drift | Model drift monitoring |
+| Standings | Championship standings |
+| Model Ops | Model metadata, SHAP importance, training history |
 
-Seeded with: 6 races, 10 drivers, 5 compounds, ~3,160 telemetry records, 5 model versions, 50 pit decisions, 250 predictions, 54 competitor strategies.
+---
 
-## CI/CD
+## Database
 
-GitHub Actions workflow (`.github/workflows/ci.yml`):
-- **Lint & Typecheck** — `eslint` + `tsc --noEmit`
-- **Tests** — database-runtime-build + python-runtime-build shell tests
-- **Build** — `bun run db:generate` + `bun run build`
-- **Docker** — builds image on main branch
-- **Deploy Preview** — placeholder for PR deployments
+8 Prisma models: `Race`, `Driver`, `TireCompound`, `Telemetry`, `TireModel`, `PitDecision`, `PredictionLog`, `CompetitorStrategy`, `WeeklyBrief`.
 
-## Project Structure
+Seeded with: 6 races, 10 drivers, 5 compounds, ~3,160 telemetry records, 50 pit decisions, 250 predictions, 54 competitor strategies.
 
-```
-├── .github/workflows/ci.yml
-├── Caddyfile
-├── prisma/schema.prisma
-├── scripts/seed.ts
-├── src/
-│   ├── app/                    # Next.js App Router
-│   │   ├── api/               # 38 API routes
-│   │   ├── page.tsx           # Dashboard shell
-│   │   └── layout.tsx
-│   ├── components/
-│   │   ├── charts/            # D3 chart components
-│   │   └── dashboard/         # 18 tab components
-│   ├── hooks/                 # React hooks
-│   └── lib/                   # DB, types, utils, socket hook
-├── mini-services/
-│   ├── telemetry-service/     # Bun + Socket.io (port 3003)
-│   └── ml-prediction-service/ # Bun HTTP (port 3004)
-└── tests/
-    ├── database-runtime-build.sh
-    ├── python-runtime-build.sh
-    └── python-runtime-container.sh
-```
-
-## Known Limitations
-
-- No authentication on API routes (demo only)
-- ML model metrics are hardcoded, not evaluated
-- Pit-window solver uses tire-age vs race-lap mismatch after stops
-- No migration history — deploys use `prisma db push --accept-data-loss`
-- ~25 unused dependencies in package.json
-- Bootstrap dead-screen if `/api/dashboard` fails
+---
 
 ## License
 
-MIT — see individual service `package.json` files.
+MIT — see [LICENSE](LICENSE).
