@@ -52,3 +52,13 @@ prompt
 server.log
 # Skills directory
 /skills/
+
+# database
+db/*.db
+db/*.db-journal
+db/*.db-wal
+db/*.db-shm
+
+# lockfiles (bun is canonical)
+package-lock.json
+yarn.lock

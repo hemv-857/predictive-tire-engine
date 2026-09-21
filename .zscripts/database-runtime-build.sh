@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-PROJECT_DIR="${PROJECT_DIR:-/home/z/my-project}"
+PROJECT_DIR="${PROJECT_DIR:-$(cd "$(dirname "$0")/.." && pwd)}"
 BUILD_DIR="${BUILD_DIR:?BUILD_DIR is required}"
 SOURCE_DB_DIR="$PROJECT_DIR/db"
 SOURCE_DB_PATH="$SOURCE_DB_DIR/custom.db"
