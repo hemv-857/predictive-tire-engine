@@ -54,7 +54,7 @@ export async function GET() {
       bin: i / binSize + 1,
       mae: Math.round(mae * 10000) / 10000,
       count: bin.length,
-      timestamp: bin[bin.length - 1].timestamp,
+      timestamp: String(bin[bin.length - 1].timestamp),
     })
   }
 

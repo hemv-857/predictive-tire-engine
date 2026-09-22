@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
       color: d.team === 'Apex Racing' ? '#ef4444' : d.team === 'Red Bull Racing' ? '#1e3a8a' : d.team === 'Ferrari' ? '#dc2626' : d.team === 'Mercedes' ? '#22c55e' : d.team === 'McLaren' ? '#f97316' : '#a855f7',
       points: driverLaps.map((t) => {
         cumTime += t.lapTime
-        return { lap: t.lap, lapTime: t.lapTime, cumTime, tirePerf: t.tirePerformance, compound: t.compoundId }
+        return { lap: t.lap, lapTime: t.lapTime, cumTime, tirePerf: t.tirePerformance, compound: t.compoundId, position: 0 }
       }),
     }
   })
