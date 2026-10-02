@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "next dev -p 3000 2>&1 | tee dev.log",
     "build": "mkdir -p db && DATABASE_URL=${DATABASE_URL:-file:$PWD/db/custom.db} prisma db push --skip-generate --accept-data-loss && next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
-    "start": "NODE_ENV=production bun .next/standalone/server.js 2>&1 | tee server.log",
+    "start": "NODE_ENV=production HOSTNAME=0.0.0.0 DATABASE_URL=${DATABASE_URL:-file:$PWD/db/custom.db} bun .next/standalone/server.js",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "db:push": "prisma db push --accept-data-loss",
