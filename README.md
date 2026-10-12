@@ -154,6 +154,10 @@ Seeded with: 6 races, 10 drivers, 5 compounds, ~3,160 telemetry records, 50 pit 
 
 ---
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
